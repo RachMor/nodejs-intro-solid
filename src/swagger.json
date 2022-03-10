@@ -1,0 +1,159 @@
+
+
+ {
+  "openapi" : "3.0.0",
+  "info":{
+    "title": "Users API",
+    "description": "This is an API for users.",
+    "version": "1.0.0",
+        "contact":{
+          "email": "users_api@gmail.com"
+        }
+  },
+  "paths": {
+    "/users":{
+      "post":{
+        "tags": ["Users"],
+        "summary": "Create a user",
+        "description":"Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":{
+                  "name": {"type":"string"},
+                  "email": {
+                    "type":"string"
+                  }
+                },
+                "example": {
+                  "name": "name example",
+                  "email": "user@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description" : "Email already exists"
+          }
+        }
+    },
+          "get":{
+        "tags": ["Users"],
+        "summary": "Find all user",
+        "description":"Find all user if admin",
+        "parameters": [{
+          "in": "header",
+          "name": "user_id",
+           "schema":{
+            "type": "string",
+            "format": "uuid",
+            "required": "true"
+        } 
+}],
+  "responses": {
+    "200":{
+      "description": "List all users",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties":{
+            "id": "string",
+            "name":"string",
+            "email": "string",
+            "admin": "boolean",
+            "created_at":"string",
+            "updated_at": "string"
+          }
+        }
+
+      }
+    },
+    "400":{
+      "description": "User does not exist or is not admin"
+    }
+  }
+}
+
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags": ["Users"],
+        "summary": "Update admin",
+        "description":"Update user admin",
+        "parameters": [{
+          "in": "path",
+          "name": "user_id",
+           "schema":{
+            "type": "string",
+            "format": "uuid",
+            "required": "true"
+        } 
+}],
+"responses":{
+  "200":{
+    "description": "User data",
+      "schema": {
+          "type": "object",
+          "properties":{
+            "id": {"type":"string"},
+            "name":{"type":"string"},
+            "email": {"type":"string"},
+            "admin": {"type":"boolean"},
+            "created_at":{"type":"string"},
+            "updated_at": {"type":"string"}
+        }
+
+      }
+  },
+  "400":{
+     "description": "User not found"
+  }
+}
+      }
+    },
+    "/users/{user_id}":{
+      "get":{
+        "tags": ["Users"],
+        "summary": "List user",
+        "description":"List user",
+        "parameters": [{
+          "in": "path",
+          "name": "user_id",
+           "schema":{
+            "type": "string",
+            "format": "uuid",
+            "required": "true"
+        } 
+}],
+"responses":{
+  "200":{
+    "description": "User data",
+      "schema": {
+          "type": "object",
+          "properties":{
+            "id": {"type":"string"},
+            "name":{"type":"string"},
+            "email": {"type":"string"},
+            "admin": {"type":"boolean"},
+            "created_at":{"type":"string"},
+            "updated_at": {"type":"string"}
+        }
+
+      }
+  },
+  "400":{
+     "description": "User not found"
+  }
+}
+    }
+    }
+  }
+ }
